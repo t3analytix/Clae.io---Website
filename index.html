@@ -5,20 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CLAE</title>
 
-  <!-- Exo 2 (Closer to Logo Geometry) -->
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Inter Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #021145;
+      color: #A9E5FF;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .main {
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      background: #021145;
-      color: #A9E5FF;
-      font-family: 'Exo 2', sans-serif;
     }
 
     .wrap {
@@ -32,20 +39,38 @@
       margin-bottom: 26px;
     }
 
-    p {
+    .descriptor {
       margin: 0;
       font-size: 15px;
-      letter-spacing: 0.8px;
-      color: #A9E5FF;
+      letter-spacing: 0.6px;
       font-weight: 500;
+      color: #A9E5FF;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      color: rgba(169, 229, 255, 0.55);
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <img src="logo.svg" alt="CLAE logo" />
-    <p>Proprietary Quantitative Research &amp; Trading System</p>
+
+  <div class="main">
+    <div class="wrap">
+      <img src="logo.svg" alt="CLAE logo" />
+      <p class="descriptor">
+        Proprietary Quantitative Research &amp; Trading System
+      </p>
+    </div>
   </div>
+
+  <footer>
+    © 2026 CLAE — T3 Analytix LLC<br>
+    All rights reserved.
+  </footer>
+
 </body>
 </html>
-
