@@ -181,6 +181,28 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
+    .send-button:disabled {
+      cursor: wait;
+      opacity: 0.6;
+    }
+
+    .form-status {
+      min-height: 18px;
+      margin: -4px 0 0;
+      font-size: 11px;
+      line-height: 1.6;
+      letter-spacing: 0.2px;
+      color: rgba(169, 229, 255, 0.72);
+    }
+
+    .form-status[data-state="error"] {
+      color: #FFB3B3;
+    }
+
+    .form-status[data-state="success"] {
+      color: var(--accent);
+    }
+
     footer {
       position: fixed;
       left: 0;
@@ -282,10 +304,11 @@
 
       <h1 id="contact-us-title">Contact Us</h1>
 
-      <form class="contact-form" action="mailto:raghav.rao@t3analytix.com" method="post" enctype="text/plain">
+      <form class="contact-form" id="contact-form" action="mailto:raghav.rao@t3analytix.com" method="post" enctype="text/plain">
         <input type="text" name="name" placeholder="Name" autocomplete="name" required>
         <input type="email" name="email" placeholder="Email" autocomplete="email" required>
         <textarea name="message" placeholder="Message" required></textarea>
+        <p class="form-status" id="form-status" aria-live="polite"></p>
         <button class="send-button" type="submit">Send Message</button>
       </form>
     </section>
@@ -296,5 +319,59 @@
     All rights reserved.
   </footer>
 
+  <script>
+    const contactForm = document.querySelector('#contact-form');
+    const formStatus = document.querySelector('#form-status');
+
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      const formData = new FormData(contactForm);
+      const payload = Object.fromEntries(formData.entries());
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending';
+      formStatus.dataset.state = '';
+      formStatus.textContent = 'Sending your message...';
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error('Message failed');
+        }
+
+        contactForm.reset();
+        formStatus.dataset.state = 'success';
+        formStatus.textContent = 'Message sent. Thank you.';
+      } catch (error) {
+        const fallbackBody = [
+          `Name: ${payload.name || ''}`,
+          `Email: ${payload.email || ''}`,
+          '',
+          payload.message || ''
+        ].join('\n');
+        const fallbackUrl = [
+          'mailto:raghav.rao@t3analytix.com',
+          '?subject=New%20CLAE%20contact%20form%20submission',
+          `&body=${encodeURIComponent(fallbackBody)}`
+        ].join('');
+
+        formStatus.dataset.state = 'error';
+        formStatus.textContent = 'Opening your email client as a fallback.';
+        window.location.href = fallbackUrl;
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send Message';
+      }
+    });
+  </script>
 </body>
 </html>
