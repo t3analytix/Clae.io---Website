@@ -13,63 +13,279 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg: #021145;
+      --accent: #A9E5FF;
+      --panel: rgba(2, 17, 69, 0.94);
+      --outline: rgba(169, 229, 255, 0.72);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background: #021145;
-      color: #A9E5FF;
+      min-height: 100svh;
+      background: var(--bg);
+      color: var(--accent);
       font-family: 'JetBrains Mono', monospace;
     }
 
-    .main {
-      flex: 1;
+    .screen {
+      min-height: 100svh;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
+      padding: 40px 20px;
     }
 
-    .wrap {
-      max-width: 720px;
-      padding: 40px;
+    .home {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: translateY(-30px);
     }
 
-    img {
+    .logo {
       width: 165px;
       height: auto;
       margin-bottom: 24px;
     }
 
     .descriptor {
-      margin: 0;
+      margin: 0 0 34px;
       font-size: 14px;
-      letter-spacing: 0.3px;
+      line-height: 1.6;
+      letter-spacing: 0.2px;
       font-weight: 400;
-      color: #A9E5FF;
+      color: var(--accent);
+    }
+
+    .nav-boxes {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .box-link,
+    .send-button {
+      display: inline-flex;
+      min-width: 154px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      border: 1px solid var(--outline);
+      border-radius: 6px;
+      background: rgba(169, 229, 255, 0.04);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      line-height: 1;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .box-link:hover,
+    .box-link:focus-visible,
+    .send-button:hover,
+    .send-button:focus-visible {
+      background: rgba(169, 229, 255, 0.12);
+      outline: none;
+    }
+
+    .panel {
+      width: min(100%, 840px);
+      display: none;
+      padding: 50px;
+      border-radius: 6px;
+      border: 1px solid rgba(169, 229, 255, 0.24);
+      background: var(--panel);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+      text-align: left;
+    }
+
+    .panel:target {
+      display: block;
+    }
+
+    body:has(.panel:target) .home {
+      display: none;
+    }
+
+    .panel .nav-boxes {
+      justify-content: flex-start;
+      gap: 14px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .panel h1 {
+      margin: 0 0 26px;
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing: 0.2px;
+      font-weight: 500;
+      color: #FFFFFF;
+    }
+
+    .panel p {
+      width: min(100%, 720px);
+      margin: 0 0 22px;
+      font-size: 13px;
+      line-height: 1.7;
+      letter-spacing: 0.2px;
+      color: rgba(169, 229, 255, 0.82);
+    }
+
+    .contact-form {
+      width: min(100%, 500px);
+      display: grid;
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(169, 229, 255, 0.34);
+      border-radius: 4px;
+      background: rgba(169, 229, 255, 0.03);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.4;
+      padding: 13px 17px;
+    }
+
+    textarea {
+      min-height: 205px;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(169, 229, 255, 0.58);
+    }
+
+    .send-button {
+      width: fit-content;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
     }
 
     footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
       text-align: center;
       padding: 20px;
       font-size: 11px;
       letter-spacing: 0.3px;
       color: rgba(169, 229, 255, 0.55);
+      pointer-events: none;
+    }
+
+    @media (max-width: 720px) {
+      .screen {
+        align-items: flex-start;
+        padding: 58px 18px 110px;
+      }
+
+      .nav-boxes {
+        flex-direction: column;
+        width: min(100%, 260px);
+        gap: 14px;
+      }
+
+      .box-link {
+        width: 100%;
+      }
+
+      .home {
+        transform: translateY(-18px);
+      }
+
+      .panel {
+        padding: 36px 26px;
+      }
+
+      .panel .nav-boxes {
+        width: 100%;
+      }
+
+      .panel h1 {
+        font-size: 30px;
+      }
+
+      .panel p {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="main">
-    <div class="wrap">
-      <img src="logo.svg" alt="CLAE logo" />
+  <main class="screen">
+    <section class="home" aria-label="Home">
+      <img class="logo" src="logo.svg" alt="CLAE logo" />
+
       <p class="descriptor">
         Proprietary Quantitative Research &amp; Trading System
       </p>
-    </div>
-  </div>
+
+      <nav aria-label="Primary navigation">
+        <ul class="nav-boxes">
+          <li><a class="box-link" href="#what-we-do">What we do</a></li>
+          <li><a class="box-link" href="#contact-us">Contact us</a></li>
+        </ul>
+      </nav>
+    </section>
+
+    <section class="panel" id="what-we-do" aria-labelledby="what-we-do-title">
+      <nav aria-label="What we do navigation">
+        <ul class="nav-boxes">
+          <li><a class="box-link" href="#">← Home</a></li>
+          <li><a class="box-link" href="#contact-us">Contact us</a></li>
+        </ul>
+      </nav>
+
+      <h1 id="what-we-do-title">What we do</h1>
+      <p>
+        CLAE is a quantitative trading system built around product-minded
+        design, data-driven analysis, and disciplined execution.
+      </p>
+      <p>
+        Its strategy uses systematic analysis to identify opportunities and
+        pursue risk-adjusted returns in public markets.
+      </p>
+    </section>
+
+    <section class="panel" id="contact-us" aria-labelledby="contact-us-title">
+      <nav aria-label="Contact navigation">
+        <ul class="nav-boxes">
+          <li><a class="box-link" href="#">← Home</a></li>
+        </ul>
+      </nav>
+
+      <h1 id="contact-us-title">Contact Us</h1>
+
+      <form class="contact-form" action="mailto:raghav.rao@t3analytix.com" method="post" enctype="text/plain">
+        <input type="text" name="name" placeholder="Name" autocomplete="name" required>
+        <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+        <textarea name="message" placeholder="Message" required></textarea>
+        <button class="send-button" type="submit">Send Message</button>
+      </form>
+    </section>
+  </main>
 
   <footer>
     © 2026 CLAE — T3 Analytix LLC<br>
