@@ -220,9 +220,11 @@
       display: flex;
       justify-content: center;
       gap: 12px;
-      margin-top: 22px;
+      margin-bottom: 14px;
+      pointer-events: auto;
     }
 
+    .social-link,
     .social-placeholder {
       width: 34px;
       height: 34px;
@@ -233,9 +235,22 @@
       border-radius: 6px;
       background: rgba(169, 229, 255, 0.03);
       color: var(--accent);
+      text-decoration: none;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .social-link:hover,
+    .social-link:focus-visible {
+      background: rgba(169, 229, 255, 0.12);
+      border-color: var(--outline);
+      outline: none;
+    }
+
+    .social-placeholder {
       opacity: 0.72;
     }
 
+    .social-link svg,
     .social-placeholder svg {
       width: 16px;
       height: 16px;
@@ -298,28 +313,6 @@
         </ul>
       </nav>
 
-      <div class="social-links" aria-label="Social placeholders">
-        <span class="social-placeholder" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.32 8.02h4.36V23H.32V8.02zM8.04 8.02h4.18v2.05h.06c.58-1.1 2-2.26 4.12-2.26 4.41 0 5.23 2.9 5.23 6.67V23h-4.36v-7.55c0-1.8-.03-4.12-2.51-4.12-2.52 0-2.9 1.97-2.9 3.99V23H8.04V8.02z"/>
-          </svg>
-        </span>
-        <span class="social-placeholder" aria-label="X">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M18.9 2h3.36l-7.34 8.39L23.56 22h-6.77l-5.3-6.93L5.42 22H2.06l7.85-8.97L1.63 2h6.94l4.79 6.33L18.9 2zm-1.18 17.95h1.86L7.55 3.94H5.56l12.16 16.01z"/>
-          </svg>
-        </span>
-        <span class="social-placeholder" aria-label="Substack">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 3h16v2.5H4V3zm0 5h16v2.5H4V8zm0 5h16v8l-8-4.5L4 21v-8z"/>
-          </svg>
-        </span>
-        <span class="social-placeholder" aria-label="Email">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M2 5h20v14H2V5zm2.43 2 7.57 5.16L19.57 7H4.43zM20 17V9.1l-8 5.45-8-5.45V17h16z"/>
-          </svg>
-        </span>
-      </div>
     </section>
 
     <section class="panel" id="about-us" aria-labelledby="about-us-title">
@@ -365,6 +358,18 @@
   </main>
 
   <footer>
+    <nav class="social-links" aria-label="Social links">
+      <span class="social-placeholder" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.32 8.02h4.36V23H.32V8.02zM8.04 8.02h4.18v2.05h.06c.58-1.1 2-2.26 4.12-2.26 4.41 0 5.23 2.9 5.23 6.67V23h-4.36v-7.55c0-1.8-.03-4.12-2.51-4.12-2.52 0-2.9 1.97-2.9 3.99V23H8.04V8.02z"/>
+        </svg>
+      </span>
+      <a class="social-link" href="mailto:raghav.rao@t3analytix.com" aria-label="Email">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M2 5h20v14H2V5zm2.43 2 7.57 5.16L19.57 7H4.43zM20 17V9.1l-8 5.45-8-5.45V17h16z"/>
+        </svg>
+      </a>
+    </nav>
     © 2026 CLAE — T3 Analytix LLC<br>
     All rights reserved.
   </footer>
