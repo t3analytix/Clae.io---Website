@@ -72,8 +72,7 @@
       list-style: none;
     }
 
-    .box-link,
-    .send-button {
+    .box-link {
       display: inline-flex;
       min-width: 154px;
       min-height: 44px;
@@ -94,9 +93,7 @@
     }
 
     .box-link:hover,
-    .box-link:focus-visible,
-    .send-button:hover,
-    .send-button:focus-visible {
+    .box-link:focus-visible {
       background: rgba(169, 229, 255, 0.12);
       outline: none;
     }
@@ -143,64 +140,6 @@
       line-height: 1.7;
       letter-spacing: 0.2px;
       color: rgba(169, 229, 255, 0.82);
-    }
-
-    .contact-form {
-      width: min(100%, 500px);
-      display: grid;
-      gap: 18px;
-      margin-top: 30px;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      border: 1px solid rgba(169, 229, 255, 0.34);
-      border-radius: 4px;
-      background: rgba(169, 229, 255, 0.03);
-      color: var(--accent);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      line-height: 1.4;
-      padding: 13px 17px;
-    }
-
-    textarea {
-      min-height: 205px;
-      resize: vertical;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: rgba(169, 229, 255, 0.58);
-    }
-
-    .send-button {
-      width: fit-content;
-      cursor: pointer;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .send-button:disabled {
-      cursor: wait;
-      opacity: 0.6;
-    }
-
-    .form-status {
-      min-height: 18px;
-      margin: -4px 0 0;
-      font-size: 11px;
-      line-height: 1.6;
-      letter-spacing: 0.2px;
-      color: rgba(169, 229, 255, 0.72);
-    }
-
-    .form-status[data-state="error"] {
-      color: #FFB3B3;
-    }
-
-    .form-status[data-state="success"] {
-      color: var(--accent);
     }
 
     footer {
@@ -309,7 +248,7 @@
       <nav aria-label="Primary navigation">
         <ul class="nav-boxes">
           <li><a class="box-link" href="#about-us">About us</a></li>
-          <li><a class="box-link" href="#contact-us">Contact us</a></li>
+          <li><a class="box-link" href="mailto:raghav.rao@t3analytix.com">Contact us</a></li>
         </ul>
       </nav>
 
@@ -319,7 +258,7 @@
       <nav aria-label="About us navigation">
         <ul class="nav-boxes">
           <li><a class="box-link" href="#">← Home</a></li>
-          <li><a class="box-link" href="#contact-us">Contact us</a></li>
+          <li><a class="box-link" href="mailto:raghav.rao@t3analytix.com">Contact us</a></li>
         </ul>
       </nav>
 
@@ -338,23 +277,6 @@
       </p>
     </section>
 
-    <section class="panel" id="contact-us" aria-labelledby="contact-us-title">
-      <nav aria-label="Contact navigation">
-        <ul class="nav-boxes">
-          <li><a class="box-link" href="#">← Home</a></li>
-        </ul>
-      </nav>
-
-      <h1 id="contact-us-title">Contact Us</h1>
-
-      <form class="contact-form" id="contact-form" action="mailto:raghav.rao@t3analytix.com" method="post" enctype="text/plain">
-        <input type="text" name="name" placeholder="Name" autocomplete="name" required>
-        <input type="email" name="email" placeholder="Email" autocomplete="email" required>
-        <textarea name="message" placeholder="Message" required></textarea>
-        <p class="form-status" id="form-status" aria-live="polite"></p>
-        <button class="send-button" type="submit">Send Message</button>
-      </form>
-    </section>
   </main>
 
   <footer>
@@ -373,60 +295,5 @@
     © 2026 CLAE — T3 Analytix LLC<br>
     All rights reserved.
   </footer>
-
-  <script>
-    const contactForm = document.querySelector('#contact-form');
-    const formStatus = document.querySelector('#form-status');
-
-    contactForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const submitButton = contactForm.querySelector('button[type="submit"]');
-      const formData = new FormData(contactForm);
-      const payload = Object.fromEntries(formData.entries());
-
-      submitButton.disabled = true;
-      submitButton.textContent = 'Sending';
-      formStatus.dataset.state = '';
-      formStatus.textContent = 'Sending your message...';
-
-      try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-          throw new Error('Message failed');
-        }
-
-        contactForm.reset();
-        formStatus.dataset.state = 'success';
-        formStatus.textContent = 'Message sent. Thank you.';
-      } catch (error) {
-        const fallbackBody = [
-          `Name: ${payload.name || ''}`,
-          `Email: ${payload.email || ''}`,
-          '',
-          payload.message || ''
-        ].join('\n');
-        const fallbackUrl = [
-          'mailto:raghav.rao@t3analytix.com',
-          '?subject=New%20CLAE%20contact%20form%20submission',
-          `&body=${encodeURIComponent(fallbackBody)}`
-        ].join('');
-
-        formStatus.dataset.state = 'error';
-        formStatus.textContent = 'Opening your email client as a fallback.';
-        window.location.href = fallbackUrl;
-      } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Send Message';
-      }
-    });
-  </script>
 </body>
 </html>
