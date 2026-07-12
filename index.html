@@ -29,9 +29,7 @@
       margin: 0;
       overflow-x: hidden;
       color: var(--ice);
-      background:
-        radial-gradient(circle at 24% 18%, rgba(169, 229, 255, 0.1), transparent 28rem),
-        linear-gradient(135deg, var(--mid-blue) 0%, var(--deep-blue) 58%);
+      background: var(--deep-blue);
       font-family: 'Source Sans 3', sans-serif;
       font-weight: 300;
     }
@@ -42,8 +40,8 @@
       inset: 0;
       pointer-events: none;
       background:
-        radial-gradient(circle at 72% 64%, rgba(1, 8, 34, 0.46), transparent 36rem),
-        linear-gradient(180deg, rgba(2, 11, 43, 0), rgba(2, 11, 43, 0.48));
+        radial-gradient(circle at 50% 40%, rgba(7, 21, 64, 0.45), transparent 34rem),
+        linear-gradient(180deg, rgba(2, 11, 43, 0), rgba(1, 7, 28, 0.34));
     }
 
     .screen {
@@ -73,12 +71,15 @@
     }
 
     .descriptor {
-      width: min(100%, 620px);
+      width: min(100%, 860px);
       margin: 0 auto 38px;
       color: rgba(221, 246, 255, 0.94);
-      font-size: 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 17px;
+      font-weight: 400;
       line-height: 1.7;
-      letter-spacing: 0.075rem;
+      letter-spacing: 0.11rem;
+      white-space: nowrap;
     }
 
     .nav-boxes {
@@ -173,10 +174,11 @@
       text-align: center;
       padding: 20px;
       color: rgba(169, 229, 255, 0.72);
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
       line-height: 1.5;
-      letter-spacing: 0.075rem;
+      letter-spacing: 0.12rem;
+      text-transform: uppercase;
       pointer-events: none;
     }
 
@@ -198,6 +200,7 @@
       .descriptor {
         font-size: 17px;
         margin-bottom: 32px;
+        white-space: normal;
       }
 
       .nav-boxes {
@@ -231,12 +234,11 @@
       <img class="logo" src="logo.svg?v=4" alt="CLAE logo" />
 
       <p class="descriptor">
-        Proprietary Quantitative Research &amp; Trading System
+        PROPRIETARY QUANTITATIVE RESEARCH &amp; TRADING SYSTEM
       </p>
 
       <nav aria-label="Primary navigation">
         <ul class="nav-boxes">
-          <li><a class="box-link" href="#about-us">About us</a></li>
           <li><a class="box-link" href="mailto:raghav.rao@t3analytix.com">Contact us</a></li>
           <li><a class="box-link" href="https://dashboard.clae.io/" target="_blank" rel="noopener noreferrer">Dashboard</a></li>
         </ul>
