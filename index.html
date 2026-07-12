@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CLAE</title>
 
-  <!-- PNG Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3">
   <link rel="shortcut icon" href="/favicon-32.png?v=3">
 
-  <!-- JetBrains Mono -->
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Source+Sans+3:wght@300;400&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #021145;
-      --accent: #A9E5FF;
-      --panel: rgba(2, 17, 69, 0.94);
-      --outline: rgba(169, 229, 255, 0.72);
+      --deep-blue: #021145;
+      --mid-blue: #123D8A;
+      --light-blue: #8FDBFF;
+      --ice: #DDF6FF;
+      --outline: rgba(221, 246, 255, 0.78);
+      --panel: rgba(2, 17, 69, 0.52);
     }
 
     * {
@@ -25,88 +25,110 @@
     }
 
     body {
-      margin: 0;
       min-height: 100svh;
-      background: var(--bg);
-      color: var(--accent);
-      font-family: 'JetBrains Mono', monospace;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ice);
+      background:
+        radial-gradient(circle at 24% 18%, rgba(143, 219, 255, 0.25), transparent 28rem),
+        linear-gradient(135deg, #63C7F6 0%, var(--mid-blue) 38%, var(--deep-blue) 74%);
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 300;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 72% 64%, rgba(1, 8, 34, 0.58), transparent 36rem),
+        linear-gradient(180deg, rgba(2, 17, 69, 0.08), rgba(2, 17, 69, 0.62));
     }
 
     .screen {
+      position: relative;
+      z-index: 1;
       min-height: 100svh;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 56px 24px 118px;
       text-align: center;
-      padding: 40px 20px;
     }
 
     .home {
+      width: min(100%, 760px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      transform: translateY(-30px);
+      transform: translateY(-16px);
     }
 
     .logo {
-      width: 165px;
+      width: min(72vw, 430px);
       height: auto;
-      margin-bottom: 24px;
+      display: block;
+      margin: 0 auto 46px;
     }
 
     .descriptor {
-      margin: 0 0 34px;
-      font-size: 14px;
-      line-height: 1.6;
-      letter-spacing: 0.2px;
-      font-weight: 400;
-      color: var(--accent);
+      width: min(100%, 620px);
+      margin: 0 auto 38px;
+      color: rgba(221, 246, 255, 0.94);
+      font-size: 20px;
+      line-height: 1.7;
+      letter-spacing: 0.075rem;
     }
 
     .nav-boxes {
       display: flex;
       justify-content: center;
-      gap: 24px;
+      gap: 14px;
       margin: 0;
       padding: 0;
       list-style: none;
+      flex-wrap: wrap;
     }
 
     .box-link {
+      width: 220px;
+      height: 50px;
       display: inline-flex;
-      min-width: 154px;
-      min-height: 44px;
       align-items: center;
       justify-content: center;
-      padding: 0 22px;
       border: 1px solid var(--outline);
       border-radius: 6px;
-      background: rgba(169, 229, 255, 0.04);
-      color: var(--accent);
+      color: #FFFFFF;
+      background: rgba(2, 17, 69, 0.06);
+      font-family: 'Montserrat', sans-serif;
       font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 4px;
+      font-weight: 400;
       line-height: 1;
+      letter-spacing: 0.3rem;
       text-decoration: none;
       text-transform: uppercase;
-      transition: background 160ms ease, color 160ms ease;
+      transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
     }
 
     .box-link:hover,
     .box-link:focus-visible {
-      background: rgba(169, 229, 255, 0.12);
+      border-color: var(--light-blue);
+      color: var(--light-blue);
+      background: rgba(143, 219, 255, 0.1);
       outline: none;
     }
 
     .panel {
-      width: min(100%, 840px);
+      width: min(100%, 760px);
       display: none;
-      padding: 50px;
-      border-radius: 6px;
-      border: 1px solid rgba(169, 229, 255, 0.24);
+      padding: 52px;
+      border: 1px solid rgba(221, 246, 255, 0.28);
+      border-radius: 8px;
       background: var(--panel);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+      box-shadow: 0 24px 80px rgba(1, 7, 26, 0.26);
       text-align: left;
+      backdrop-filter: blur(10px);
     }
 
     .panel:target {
@@ -119,121 +141,81 @@
 
     .panel .nav-boxes {
       justify-content: flex-start;
-      gap: 14px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
+      margin-bottom: 36px;
     }
 
     .panel h1 {
-      margin: 0 0 26px;
-      font-size: 34px;
-      line-height: 1.1;
-      letter-spacing: 0.2px;
-      font-weight: 500;
+      margin: 0 0 28px;
       color: #FFFFFF;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px;
+      line-height: 1.28;
+      font-weight: 400;
+      letter-spacing: 0.28rem;
+      text-transform: uppercase;
     }
 
     .panel p {
-      width: min(100%, 720px);
-      margin: 0 0 22px;
-      font-size: 13px;
-      line-height: 1.7;
-      letter-spacing: 0.2px;
-      color: rgba(169, 229, 255, 0.82);
+      width: min(100%, 640px);
+      margin: 0 0 20px;
+      color: rgba(221, 246, 255, 0.9);
+      font-size: 18px;
+      line-height: 1.78;
+      letter-spacing: 0.075rem;
     }
 
     footer {
       position: fixed;
+      z-index: 2;
       left: 0;
       right: 0;
       bottom: 0;
       text-align: center;
       padding: 20px;
-      font-size: 11px;
-      letter-spacing: 0.3px;
-      color: rgba(169, 229, 255, 0.55);
+      color: rgba(169, 229, 255, 0.72);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      letter-spacing: 0.075rem;
       pointer-events: none;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 14px;
-      pointer-events: auto;
-    }
-
-    .social-link,
-    .social-placeholder {
-      width: 34px;
-      height: 34px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(169, 229, 255, 0.48);
-      border-radius: 6px;
-      background: rgba(169, 229, 255, 0.03);
-      color: var(--accent);
-      text-decoration: none;
-      transition: background 160ms ease, border-color 160ms ease;
-    }
-
-    .social-link:hover,
-    .social-link:focus-visible {
-      background: rgba(169, 229, 255, 0.12);
-      border-color: var(--outline);
-      outline: none;
-    }
-
-    .social-placeholder {
-      opacity: 0.72;
-    }
-
-    .social-link svg,
-    .social-placeholder svg {
-      width: 16px;
-      height: 16px;
-      display: block;
-      fill: currentColor;
-    }
-
-    .social-text {
-      font-size: 11px;
-      font-weight: 500;
-      line-height: 1;
-      letter-spacing: 0.3px;
     }
 
     @media (max-width: 720px) {
       .screen {
         align-items: flex-start;
-        padding: 58px 18px 110px;
+        padding: 72px 20px 112px;
+      }
+
+      .home {
+        transform: none;
+      }
+
+      .logo {
+        width: min(88vw, 390px);
+        margin-bottom: 34px;
+      }
+
+      .descriptor {
+        font-size: 17px;
+        margin-bottom: 32px;
       }
 
       .nav-boxes {
+        width: min(100%, 280px);
         flex-direction: column;
-        width: min(100%, 260px);
-        gap: 14px;
       }
 
       .box-link {
         width: 100%;
       }
 
-      .home {
-        transform: translateY(-18px);
-      }
-
       .panel {
-        padding: 36px 26px;
-      }
-
-      .panel .nav-boxes {
-        width: 100%;
+        padding: 34px 26px;
       }
 
       .panel h1 {
         font-size: 30px;
+        letter-spacing: 0.18rem;
       }
 
       .panel p {
@@ -246,7 +228,7 @@
 
   <main class="screen">
     <section class="home" aria-label="Home">
-      <img class="logo" src="logo.svg" alt="CLAE logo" />
+      <img class="logo" src="logo.svg?v=4" alt="CLAE logo" />
 
       <p class="descriptor">
         Proprietary Quantitative Research &amp; Trading System
@@ -256,16 +238,17 @@
         <ul class="nav-boxes">
           <li><a class="box-link" href="#about-us">About us</a></li>
           <li><a class="box-link" href="mailto:raghav.rao@t3analytix.com">Contact us</a></li>
+          <li><a class="box-link" href="https://dashboard.clae.io/" target="_blank" rel="noopener noreferrer">Dashboard</a></li>
         </ul>
       </nav>
-
     </section>
 
     <section class="panel" id="about-us" aria-labelledby="about-us-title">
       <nav aria-label="About us navigation">
         <ul class="nav-boxes">
-          <li><a class="box-link" href="#">← Home</a></li>
+          <li><a class="box-link" href="#">Home</a></li>
           <li><a class="box-link" href="mailto:raghav.rao@t3analytix.com">Contact us</a></li>
+          <li><a class="box-link" href="https://dashboard.clae.io/" target="_blank" rel="noopener noreferrer">Dashboard</a></li>
         </ul>
       </nav>
 
@@ -283,27 +266,12 @@
         its tech or signals.
       </p>
     </section>
-
   </main>
 
   <footer>
-    <nav class="social-links" aria-label="Social links">
-      <a class="social-link" href="https://www.linkedin.com/in/raghavprao" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.32 8.02h4.36V23H.32V8.02zM8.04 8.02h4.18v2.05h.06c.58-1.1 2-2.26 4.12-2.26 4.41 0 5.23 2.9 5.23 6.67V23h-4.36v-7.55c0-1.8-.03-4.12-2.51-4.12-2.52 0-2.9 1.97-2.9 3.99V23H8.04V8.02z"/>
-        </svg>
-      </a>
-      <a class="social-link" href="mailto:raghav.rao@t3analytix.com" aria-label="Email">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M2 5h20v14H2V5zm2.43 2 7.57 5.16L19.57 7H4.43zM20 17V9.1l-8 5.45-8-5.45V17h16z"/>
-        </svg>
-      </a>
-      <a class="social-link" href="https://dashboard.clae.io/" target="_blank" rel="noopener noreferrer" aria-label="T3 Dashboard">
-        <span class="social-text" aria-hidden="true">T3</span>
-      </a>
-    </nav>
     © 2026 CLAE — T3 Analytix LLC<br>
     All rights reserved.
   </footer>
+
 </body>
 </html>
