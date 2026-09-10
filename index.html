@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,14 +10,44 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Source+Sans+3:wght@300;400&display=swap" rel="stylesheet">
 
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('clae-theme');
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        document.documentElement.dataset.theme = savedTheme;
+      }
+    } catch (_) {}
+  </script>
+
   <style>
     :root {
-      --deep-blue: #020b2b;
-      --mid-blue: #071540;
-      --light-blue: #a9e5ff;
-      --ice: #DDF6FF;
-      --outline: rgba(169, 229, 255, 0.78);
+      color-scheme: light;
+      --page: #f6f9ff;
+      --surface: #ffffff;
+      --ink: #0b1b4f;
+      --muted: #0b1b4f;
+      --accent: #1f6f8b;
+      --accent-soft: #e4f2f6;
+      --outline: rgba(11, 27, 79, 0.22);
+      --panel: rgba(255, 255, 255, 0.88);
+      --control-bg: rgba(255, 255, 255, 0.62);
+      --shadow: rgba(11, 27, 79, 0.12);
+      --rule: rgba(11, 27, 79, 0.16);
+    }
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --page: #020b2b;
+      --surface: #071540;
+      --ink: #ddf6ff;
+      --muted: #a9e5ff;
+      --accent: #a9e5ff;
+      --accent-soft: rgba(143, 219, 255, 0.1);
+      --outline: rgba(169, 229, 255, 0.42);
       --panel: rgba(2, 17, 69, 0.52);
+      --control-bg: rgba(2, 17, 69, 0.3);
+      --shadow: rgba(1, 7, 26, 0.26);
+      --rule: rgba(169, 229, 255, 0.32);
     }
 
     * {
@@ -28,10 +58,11 @@
       min-height: 100svh;
       margin: 0;
       overflow-x: hidden;
-      color: var(--ice);
-      background: var(--deep-blue);
+      color: var(--ink);
+      background: var(--page);
       font-family: 'Source Sans 3', sans-serif;
       font-weight: 300;
+      transition: background-color 180ms ease, color 180ms ease;
     }
 
     body::after {
@@ -39,9 +70,45 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background:
-        radial-gradient(circle at 50% 40%, rgba(7, 21, 64, 0.45), transparent 34rem),
-        linear-gradient(180deg, rgba(2, 11, 43, 0), rgba(1, 7, 28, 0.34));
+      background: transparent;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      z-index: 4;
+      top: 22px;
+      right: 22px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid var(--outline);
+      border-radius: 6px;
+      color: var(--ink);
+      background: var(--control-bg);
+      cursor: pointer;
+      transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .theme-toggle:hover,
+    .theme-toggle:focus-visible {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      outline: none;
+    }
+
+    .theme-icon {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .theme-icon::before {
+      content: "\263E";
+    }
+
+    [data-theme="dark"] .theme-icon::before {
+      content: "\2600";
     }
 
     .screen {
@@ -70,10 +137,14 @@
       margin: 0 auto 46px;
     }
 
+    [data-theme="dark"] .logo {
+      filter: brightness(0) saturate(100%) invert(91%) sepia(14%) saturate(943%) hue-rotate(168deg) brightness(102%) contrast(101%);
+    }
+
     .descriptor {
       width: min(100%, 860px);
       margin: 0 auto 48px;
-      color: var(--light-blue);
+      color: var(--muted);
       font-family: 'Montserrat', sans-serif;
       font-size: 20px;
       font-weight: 400;
@@ -100,8 +171,8 @@
       justify-content: center;
       border: 1px solid var(--outline);
       border-radius: 6px;
-      color: var(--light-blue);
-      background: rgba(2, 17, 69, 0.06);
+      color: var(--ink);
+      background: var(--control-bg);
       font-family: 'Montserrat', sans-serif;
       font-size: 11px;
       font-weight: 400;
@@ -114,9 +185,9 @@
 
     .box-link:hover,
     .box-link:focus-visible {
-      border-color: var(--light-blue);
-      color: var(--light-blue);
-      background: rgba(143, 219, 255, 0.1);
+      color: var(--ink);
+      border-color: rgba(31, 111, 139, 0.62);
+      background: var(--accent-soft);
       outline: none;
     }
 
@@ -124,10 +195,10 @@
       width: min(100%, 760px);
       display: none;
       padding: 52px;
-      border: 1px solid rgba(221, 246, 255, 0.28);
+      border: 1px solid var(--outline);
       border-radius: 8px;
       background: var(--panel);
-      box-shadow: 0 24px 80px rgba(1, 7, 26, 0.26);
+      box-shadow: 0 24px 80px var(--shadow);
       text-align: left;
       backdrop-filter: blur(10px);
     }
@@ -147,7 +218,7 @@
 
     .panel h1 {
       margin: 0 0 28px;
-      color: #FFFFFF;
+      color: var(--ink);
       font-family: 'Montserrat', sans-serif;
       font-size: 42px;
       line-height: 1.28;
@@ -159,7 +230,7 @@
     .panel p {
       width: min(100%, 640px);
       margin: 0 0 20px;
-      color: rgba(221, 246, 255, 0.9);
+      color: var(--muted);
       font-size: 18px;
       line-height: 1.78;
       letter-spacing: 0.075rem;
@@ -173,7 +244,7 @@
       bottom: 0;
       text-align: center;
       padding: 20px;
-      color: var(--light-blue);
+      color: var(--muted);
       font-family: 'Montserrat', sans-serif;
       font-size: 10px;
       line-height: 1.5;
@@ -188,7 +259,7 @@
       height: 1px;
       display: block;
       margin: 0 auto 18px;
-      background: rgba(169, 229, 255, 0.32);
+      background: var(--rule);
     }
 
     @media (max-width: 720px) {
@@ -240,9 +311,13 @@
 </head>
 <body>
 
+  <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+    <span class="theme-icon" aria-hidden="true"></span>
+  </button>
+
   <main class="screen">
     <section class="home" aria-label="Home">
-      <img class="logo" src="logo.svg?v=4" alt="CLAE logo" />
+      <img class="logo" src="logo.svg?v=7" alt="CLAE logo" />
 
       <p class="descriptor">
         Proprietary Quantitative Research &amp; Trading System
@@ -286,6 +361,29 @@
     © 2026 CLAE — T3 Analytix LLC<br>
     All rights reserved.
   </footer>
+
+  <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+
+    function syncThemeToggle() {
+      const isDark = document.documentElement.dataset.theme === 'dark';
+      const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+      themeToggle.setAttribute('aria-label', label);
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+      themeToggle.title = label;
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = nextTheme;
+      try {
+        localStorage.setItem('clae-theme', nextTheme);
+      } catch (_) {}
+      syncThemeToggle();
+    });
+
+    syncThemeToggle();
+  </script>
 
 </body>
 </html>
